@@ -22,8 +22,8 @@ Remember to include styles in your build-step `src/styles/main.styl`
 
 As global
 ```html
-<link rel="stylesheet" href="node_modules/event-calendar/dist/main.css">
-<script src="node_modules/event-calendar/dist/calendar.js"></script>
+<link rel="stylesheet" href="node_modules/event-calendar/dist/event-calendar.css">
+<script src="node_modules/event-calendar/dist/event-calendar.min.js"></script>
 <script>
     var cal = eventCalender({
         selector: '.js-calender',
