@@ -15,7 +15,7 @@ const errors = {
   SELECTOR_DID_NOT_MATCH: 'Selector did not match any element'
 };
 
-function eventCalender({ selector, locale, debug, tdTemplate, eventTemplate, state: initialState = {} }) {
+function eventCalender({ selector, momentLocale: locale, debug, tdTemplate, eventTemplate, state: initialState = {} }) {
   const _events = {};
   let el;
   let state;
@@ -24,6 +24,7 @@ function eventCalender({ selector, locale, debug, tdTemplate, eventTemplate, sta
   let tbody;
   let prev;
   let next;
+  let api;
 
   function createDOM() {
     createTable();
@@ -247,12 +248,16 @@ function eventCalender({ selector, locale, debug, tdTemplate, eventTemplate, sta
       _events[event] = [];
     }
     _events[event] = [..._events[event], callback];
+
+    return api;
   }
 
   function off(event, callback) {
     _events[event] = _events[event].filter((cb) => {
       return cb !== callback;
     });
+
+    return api;
   }
 
   function emit(event, data) {
@@ -296,7 +301,8 @@ function eventCalender({ selector, locale, debug, tdTemplate, eventTemplate, sta
    */
 
   init();
-  return { render, setState, on, off };
+  api = { render, setState, on, off };
+  return api;
 }
 
 export default eventCalender;
