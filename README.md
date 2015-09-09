@@ -1,5 +1,6 @@
 event-calendar
 ==============
+
 > Simple calendar for listing events [Demo: http://hontas.github.io/event-calendar](http://hontas.github.io/event-calendar/)
 
 [![Dependency Status](https://david-dm.org/hontas/event-calendar.svg)](https://david-dm.org/hontas/event-calendar)
