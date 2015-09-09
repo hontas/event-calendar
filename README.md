@@ -1,6 +1,6 @@
 event-calendar
 ==============
-> Simple calendar for events
+> Simple calendar for events [Demo][http://hontas.github.io/event-calendar/]
 
 ## Install
 ```shell
@@ -75,6 +75,7 @@ calendar({
 ## ToDo
 
 - Events without link
+- remove moment JS dependancy...?
 - Pluggable template functions
 - gh-pages example
 - remove webpack - simplify build/dev

@@ -5,7 +5,7 @@
   "main": "src/calendar.js",
   "scripts": {
     "clean": "rimraf dist/*",
-    "prepublish": "npm version minor && npm run build && npm run deploy",
+    "prepublish": "npm version minor && npm run deploy",
     "prebuild": "npm run clean -s",
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
     "build:scripts": "browserify --debug src/js/calendar.js --standalone calendar --transform babelify --plugin [minifyify --map calendar.map.json --output dist/calendar.map.json] > dist/calendar.js",
@@ -14,6 +14,7 @@
     "test": "karma start --singleRun",
     "watch": "parallelshell 'npm run watch:build -s'",
     "watch:build": "nodemon --quiet --watch src/ --ext '.' --exec 'npm run build'",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "serve": "http-server -p 3000 dist/",
     "open": "opener http://localhost:3000",
