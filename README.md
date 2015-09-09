@@ -1,5 +1,4 @@
-event-calendar
-==============
+# event-calendar
 
 > Simple calendar for listing events [Demo: http://hontas.github.io/event-calendar](http://hontas.github.io/event-calendar/)
 
