@@ -75,6 +75,7 @@ calendar({
 ## ToDo
 
 - Events without link
+- documentation fro es6 module and standalone
 - remove moment JS dependancy...?
 - Pluggable template functions
 - gh-pages example
