@@ -1,0 +1,134 @@
+$gray = #666;
+$gray-dark = #333;
+$gray-light = #999;
+$gray-lighter = #F7F7F7;
+$off-white = #FCFCFC;
+
+html {
+  background-color: $gray-lighter;
+  font-family: sans-serif;
+}
+
+.evt-calendar__container {
+  border: 1px solid darken($gray-lighter, 2%);
+  overflow: scroll;
+}
+
+.evt-calendar {
+  border-collapse: collapse;
+  width: 100%;
+
+  caption,
+  thead th {
+    background-color: $off-white;
+    border-bottom: 1px solid $gray-lighter;
+    color: $gray;
+    font-weight: normal;
+  }
+
+  &__caption {
+    padding-top: 0.5em;
+    padding-bottom: 0.3em;
+  }
+
+  &__prev-btn,
+  &__next-btn {
+    background-color: transparent;
+    border: none;
+    color: $gray-light;
+    cursor: pointer;
+    float: left;
+    font-size: 1em;
+    padding: 0.3em 1em .5em;
+    text-align: left;
+    width: 42%;
+    &:hover, &:active {
+      background-color: $gray-lighter;
+      color: $gray;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__prev-btn {
+    text-align: right;
+  }
+
+  &__next-btn { float: right; }
+
+  th {
+    font-size: 0.875em;
+    padding: 0.4em 1.4em;
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $gray-lighter;
+      &:last-of-type {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__cell {
+    background-color: $off-white;
+    border-right: 1px solid $gray-lighter;
+    color: $gray;
+    font-size: 0.75em;
+    padding: 0;
+    position: relative;
+    height: 60px;
+    width: 150px
+
+    &__event {
+      color: $gray-dark;
+      display: block;
+      padding: 0.5em;
+
+      &:first-child {
+        padding-top: 1em;
+      }
+      &:last-of-type {
+        padding-bottom: 1em;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      &:hover, &:active {
+        color: black;
+        text-decoration: underline;
+      }
+    }
+
+    &__date {
+      color: inherit;
+      font-size: 0.833333333em;
+      position: absolute;
+      top: 0.3em;
+      right: 0.3em;
+    }
+
+    &--active {
+      background-color: white;
+      &:hover {
+        background-color: darken($off-white, 1%);
+      }
+    }
+
+    &--passive {
+      background-color: $gray-lighter;
+      border-right-color: $off-white;
+      color: $gray-light;
+
+      .evt-calendar__cell__event {
+        color: $gray;
+      }
+    }
+
+    &:last-of-type {
+      border-right: none;
+    }
+  }
+}
