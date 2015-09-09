@@ -1,0 +1,22 @@
+{
+  "name": "event-calendar",
+  "version": "0.4.2",
+  "homepage": "https://github.com/hontas/event-calendar",
+  "authors": [
+    "Pontus Lundin <lundin.pontus@gmail.com>"
+  ],
+  "description": "Simple calendar for listing events",
+  "main": [
+    "dist/event-calendar.min.js",
+    "dist/event-calendar.css"
+  ],
+  "keywords": [
+    "calendar"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

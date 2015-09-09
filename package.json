@@ -11,7 +11,7 @@
     "patch": "npm run bumb:patch && npm publish",
     "minor": "npm run bumb && npm publish",
     "prepublish": "npm run build",
-    "postpublish": "npm run deploy",
+    "postpublish": "npm run deploy && git push --tags",
     "prebuild": "npm run clean -s",
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
     "build:scripts": "browserify --debug src/js/calendar.js --standalone eventCalender --transform babelify --plugin [minifyify --map event-calendar.min.map.json --output dist/event-calendar.min.map.json] > dist/event-calendar.min.js",
