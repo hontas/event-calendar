@@ -15,7 +15,7 @@ const errors = {
   SELECTOR_DID_NOT_MATCH: "Selector did not match any element"
 };
 
-function calendar({ selector, locale, debug, tdTemplate, eventTemplate, state:initialState = {} }) {
+function eventCalender({ selector, locale, debug, tdTemplate, eventTemplate, state:initialState = {} }) {
   let events = {},
     el, state, table, captionText, tbody, prev, next;
 
@@ -285,4 +285,4 @@ function calendar({ selector, locale, debug, tdTemplate, eventTemplate, state:in
   return { render, setState, on, off };
 }
 
-export default calendar;
+export default eventCalender;
