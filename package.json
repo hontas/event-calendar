@@ -19,11 +19,13 @@
     "deploy": "gh-pages -d dist",
     "serve": "http-server -p 3000 dist/",
     "open": "opener http://localhost:3000",
-    "livereload": "live-reload --port 3001 dist/",
-    "dev": "npm run open -s & parallelshell 'npm run livereload -s' 'npm run serve -s' 'npm run watch -s'"
+    "dev": "npm run open -s & parallelshell 'npm run serve -s' 'npm run watch -s'"
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "license": "ISC",
+  "dependencies": {
+    "moment": "^2.10.6"
+  },
   "devDependencies": {
     "babelify": "^6.3.0",
     "browserify": "^11.0.1",
@@ -32,9 +34,7 @@
     "gh-pages": "^0.4.0",
     "http-server": "^0.8.0",
     "jade": "^1.11.0",
-    "live-reload": "^1.1.0",
     "minifyify": "^7.0.6",
-    "moment": "^2.10.6",
     "nodemon": "^1.4.1",
     "object-assign": "^4.0.1",
     "opener": "^1.4.1",
