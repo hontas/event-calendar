@@ -1,6 +1,6 @@
 event-calendar
 ==============
-> Simple calendar for events [Demo][http://hontas.github.io/event-calendar/]
+> Simple calendar for events [Demo](http://hontas.github.io/event-calendar/)
 
 ## Install
 ```shell
