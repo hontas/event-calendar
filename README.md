@@ -7,23 +7,33 @@
 
 ## Install
 ```shell
-npm i -D event-calendar
+npm install --save event-calendar
 ```
 
 ## Use
+ES6 module
 ```js
 import eventCalender from 'event-calender';
 
 const cal = eventCalender({ selector: '.js-calender' });
+```
 
-const cal = eventCalender({
-    selector: '.js-calender',
-    locale: 'sv',
-    state: {
-        events: [...],
-        currentTime: Date.now()
-    }
-});
+Remember to include styles in your build-step `src/styles/main.styl`
+
+As global
+```html
+<link rel="stylesheet" href="node_modules/event-calendar/dist/main.css">
+<script src="node_modules/event-calendar/dist/calendar.js"></script>
+<script>
+    var cal = eventCalender({
+        selector: '.js-calender',
+        locale: 'sv',
+        state: {
+            events: [...],
+            currentTime: Date.now()
+        }
+    });
+</script>
 ```
 
 ### Options

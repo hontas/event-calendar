@@ -1,12 +1,12 @@
 export function find(array, value, key) {
-  var res;
+  let res = null;
 
   function getPredicate(item) {
     if (value instanceof RegExp) {
       return key ? value.test(item[key]) : value.test(item);
     }
 
-    if (typeof value === "function") {
+    if (typeof value === 'function') {
       return key ? value(item[key]) : value(item);
     }
 
@@ -14,7 +14,7 @@ export function find(array, value, key) {
   }
 
   array.some((item) => {
-    var predicate = getPredicate(item);
+    const predicate = getPredicate(item);
     if (predicate) {
       res = item;
       return true;
@@ -30,26 +30,31 @@ export function mapBy(array, keys) {
       return keys.reduce((res, key) => {
         res[key] = item[key];
         return res;
-      }, {})
+      }, {});
     });
-  } else {
-    return array.map((item) => item[keys]);
   }
+
+  return array.map((item) => item[keys]);
 }
 
 export function capitalize(str) {
-  if (typeof str !== "string") {
-    throw Error("Argument must be of type String");
+  if (typeof str !== 'string') {
+    throw Error('Argument must be of type String');
   }
-  return str.slice(0,1).toUpperCase() + str.slice(1);
+  return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
 export function range(num) {
-  return [0, 1, 2, 3, 4, 5, 6];
+  let i = 0;
+  const arr = [];
+  do {
+    arr.push(i);
+  } while (++i < num);
+  return arr;
 }
 
 export function isFunction(fn) {
-  return typeof fn === "function";
+  return typeof fn === 'function';
 }
 
 export default { find, mapBy, capitalize, range, isFunction };
