@@ -6,7 +6,11 @@
   "main": "src/js/calendar.js",
   "scripts": {
     "clean": "rimraf dist/*",
-    "prepublish": "npm version minor && npm run deploy",
+    "bumb": "npm version minor && git ci -m 'version bump minor' package.json",
+    "bumb:patch": "npm version patch && git ci -m 'version bump patch' package.json",
+    "patch": "npm run bumb:patch && npm publish",
+    "minor": "npm run bumb && npm publish",
+    "prepublish": "npm run deploy",
     "prebuild": "npm run clean -s",
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
     "build:scripts": "browserify --debug src/js/calendar.js --standalone eventCalender --transform babelify --plugin [minifyify --map calendar.map.json --output dist/calendar.map.json] > dist/calendar.js",
