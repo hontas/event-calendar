@@ -6,8 +6,8 @@
   "main": "src/js/calendar.js",
   "scripts": {
     "clean": "rimraf dist/*",
-    "bumb": "npm version minor && git ci -m 'version bump minor' package.json",
-    "bumb:patch": "npm version patch && git ci -m 'version bump patch' package.json",
+    "bumb": "npm version minor",
+    "bumb:patch": "npm version patch",
     "patch": "npm run bumb:patch && npm publish",
     "minor": "npm run bumb && npm publish",
     "prepublish": "npm run deploy",
