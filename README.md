@@ -1,8 +1,9 @@
 event-calendar
 ==============
-> Simple calendar for events [Demo: http://hontas.github.io/event-calendar](http://hontas.github.io/event-calendar/)
+> Simple calendar for listing events [Demo: http://hontas.github.io/event-calendar](http://hontas.github.io/event-calendar/)
 
 [![Dependency Status](https://david-dm.org/hontas/event-calendar.svg)](https://david-dm.org/hontas/event-calendar)
+[![Dependency Status](https://david-dm.org/hontas/event-calendar/dev-status.svg)](https://david-dm.org/hontas/event-calendar#info=devDependencies)
 
 ## Install
 ```shell
