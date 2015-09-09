@@ -6,48 +6,69 @@
 [![Dependency Status](https://david-dm.org/hontas/event-calendar/dev-status.svg)](https://david-dm.org/hontas/event-calendar#info=devDependencies)
 
 ## Install
+### Node
 ```shell
 npm install --save event-calendar
 ```
 
+### Bower
+```shell
+bower install --save evt-calendar
+```
+
 ## Use
+### ES6 module
 ES6 module
 ```js
 import eventCalender from 'event-calender';
 
-const cal = eventCalender({ selector: '.js-calender' });
+eventCalender({ selector: '.js-calender' });
 ```
 
 Remember to include styles in your build-step `src/styles/main.styl`
 
-As global
+### Global
 ```html
-<link rel="stylesheet" href="node_modules/event-calendar/dist/event-calendar.css">
-<script src="node_modules/event-calendar/dist/event-calendar.min.js"></script>
+<link href="bower_components/event-calendar/dist/event-calendar.css" rel="stylesheet">
+<script src="bower_components/event-calendar/dist/event-calendar.min.js"></script>
 <script>
-    var cal = eventCalender({
-        selector: '.js-calender',
-        locale: 'sv',
-        state: {
-            events: [...],
-            currentTime: Date.now()
-        }
-    });
+  eventCalender({ selector: '.js-calender' });
 </script>
 ```
 
 ### Options
 - **selector** {String} DOM selector for container element - *required*
-- **locale** {String} moment locale (you must supply locale-files yourself)
+- **momentLocale** {String} - remember to load locale-files before
 - **state** {Object}
     - **events** {Array} [...eventItems]
-    - **currentTime** {Date | timestamp | Datestring with time}
+    - **currentTime** {Date | timestamp | Datestring}
 - template functions - see below
 
-### Event item interface
-- **name** {String} required
-- **date** {Date | Datestring | timestamp} required
-- **link** {String url} optional
+```js
+evtCalendar({
+  selector: '.js-evt-cal',
+  momentLocale: 'sv', // remember to load locale-file before
+  state: {
+    events: [{ name: 'test', date: Date.now() }],
+    currentTime: Date.now()
+  },
+  tdTemplate: function({ day, events }) { return ""; },
+  eventTemplate: function(event) { return event.name"; }
+})
+  .on('did-render', function() {})
+  .on('will-change-state', function() {});
+```
+
+### Calendar Events interface
+```js
+var events = [
+  {
+    name: {String}, // required
+    date: {Date | timestamp | Datestring}, // required
+    link: {String}
+  }
+];
+```
 
 ## API
 - **render**
@@ -85,13 +106,26 @@ calendar({
 });
 ```
 
+## Deploy
+Run `npm run major` to publish new major version
+Run `npm run minor` to publish new minor version
+Run `npm run patch` to publish new version patch
+
+These tasks will:
+1. bump version
+2. build to dist
+3. publish to npmjs
+4. deploy dist to gh-pages branch
+5. push new git-tags
+
 ## ToDo
 
-- Events without link
-- documentation fro es6 module and standalone
 - remove moment JS dependancy...?
-- Pluggable template functions
-- gh-pages example
-- remove webpack - simplify build/dev
 
 ## Change log
+
+### 0.4.5
+- Events without link
+- improved documentation
+- Pluggable template functions (tdTemplate & eventTemplate)
+- gh-pages demo
