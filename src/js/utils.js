@@ -53,8 +53,16 @@ export function range(num) {
   return arr;
 }
 
-export function isFunction(fn) {
-  return typeof fn === 'function';
+function is(item, type) {
+  return typeof item === type;
 }
 
-export default { find, mapBy, capitalize, range, isFunction };
+export function isFunction(fn) {
+  return is(fn, 'function');
+}
+
+export function isString(fn) {
+  return is(fn, 'string');
+}
+
+export default { find, mapBy, capitalize, range, isFunction, isString };

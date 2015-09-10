@@ -1,6 +1,6 @@
 import moment from 'moment';
 import assign from 'object-assign';
-import { capitalize, range, isFunction } from './utils';
+import { capitalize, range, isFunction, isString } from './utils';
 
 const evts = {
   INITIALIZED: 'initialized',
@@ -12,10 +12,11 @@ const evts = {
 
 const prefix = 'evt-calendar';
 const errors = {
-  SELECTOR_DID_NOT_MATCH: 'Selector did not match any element'
+  SELECTOR_DID_NOT_MATCH: 'Selector did not match any element',
+  INVALID_SELECTOR: 'Must supply css-selector as string'
 };
 
-function eventCalender({ selector, momentLocale: locale, debug, tdTemplate, eventTemplate, state: initialState = {} }) {
+function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, eventTemplate, state: initialState = {} }) {
   const _events = {};
   let el;
   let state;
@@ -271,6 +272,10 @@ function eventCalender({ selector, momentLocale: locale, debug, tdTemplate, even
    */
 
   function init() {
+    if (!selector || !isString(selector)) {
+      throw Error(errors.INVALID_SELECTOR);
+    }
+
     el = document.querySelector(selector);
 
     if (!el) {
@@ -305,5 +310,5 @@ function eventCalender({ selector, momentLocale: locale, debug, tdTemplate, even
   return api;
 }
 
-export default eventCalender;
+export default eventCalendar;
 

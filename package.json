@@ -15,7 +15,7 @@
     "postpublish": "npm run deploy && git push --tags",
     "prebuild": "npm run clean -s",
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
-    "build:scripts": "browserify --debug src/js/calendar.js --standalone eventCalender --transform babelify --plugin [minifyify --map event-calendar.min.map.json --output dist/event-calendar.min.map.json] > dist/event-calendar.min.js",
+    "build:scripts": "browserify --debug src/js/calendar.js --standalone eventCalendar --transform babelify --plugin [minifyify --map event-calendar.min.map.json --output dist/event-calendar.min.map.json] > dist/event-calendar.min.js",
     "build:styles": "stylus src/styles/event-calendar.styl --sourcemap --compress --out dist",
     "build:markup": "jade src/views/index.jade --out dist/",
     "lint": "eslint src",

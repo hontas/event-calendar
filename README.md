@@ -19,7 +19,7 @@ import eventCalender from 'event-calender';
 eventCalender({ selector: '.js-calender' });
 ```
 
-Remember to include styles in your build-step from `src/styles/main.styl`
+Remember to include styles in your build-step from `src/styles/event-calendar.styl`
 
 ### In browser
 ```html
