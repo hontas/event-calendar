@@ -1,6 +1,5 @@
-import moment from 'moment';
 import assign from 'object-assign';
-import { capitalize, range, isFunction, isString } from './utils';
+import { capitalize, range, isFunction, isString, date } from './utils';
 
 const evts = {
   INITIALIZED: 'initialized',
@@ -16,7 +15,20 @@ const errors = {
   INVALID_SELECTOR: 'Must supply css-selector as string'
 };
 
-function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, eventTemplate, state: initialState = {} }) {
+const lang = {
+  en: {
+    months: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+    weekdays: 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+    startOfWeek: 0
+  },
+  sv: {
+    months: 'januari_februari_mars_april_maj_juni_juli_augusti_september_oktober_november_december'.split('_'),
+    weekdays: 'söndag_måndag_tisdag_onsdag_torsdag_fredag_lördag'.split('_'),
+    startOfWeek: 1
+  }
+};
+
+function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'en', i18n: userLang = {}, state: initialState = {} }) {
   const _events = {};
   let el;
   let state;
@@ -26,6 +38,18 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
   let prev;
   let next;
   let api;
+  let i18n = assign({}, lang, userLang, {
+    getWeekDay(i) {
+      const index = i + this.getWeekStart();
+      return this[locale].weekdays[index > 6 ? 0 : index];
+    },
+    getMonth(i) {
+      return this[locale].months[i];
+    },
+    getWeekStart() {
+      return this[locale].startOfWeek;
+    }
+  });
 
   function createDOM() {
     createTable();
@@ -69,7 +93,7 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
   }
 
   function goToPreviousMonth() {
-    const previous = moment(state.currentTime).subtract(1, 'month');
+    const previous = date(state.currentTime).subtractMonth();
     setState({
       currentTime: previous.valueOf()
     });
@@ -77,7 +101,7 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
   }
 
   function goToNextMonth() {
-    const following = moment(state.currentTime).add(1, 'month');
+    const following = date(state.currentTime).addMonth();
 
     setState({
       currentTime: following.valueOf()
@@ -93,12 +117,17 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
     render();
   }
 
+  function setLocale(str) {
+    locale = str;
+    render();
+  }
+
   function render() {
     emit(evts.WILL_RENDER);
 
     const newTbody = createEl('tbody', { innerHTML: createMonth() });
 
-    captionText.textContent = capitalize(moment(state.currentTime).format('MMMM'));
+    captionText.textContent = capitalize(i18n.getMonth(date(state.currentTime).month()));
 
     table.replaceChild(newTbody, tbody);
     tbody = newTbody;
@@ -115,9 +144,8 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
   }
 
   function createTableHead() {
-    const now = moment();
     const days = range(7)
-      .map((i) => capitalize(now.weekday(i).format('dddd')))
+      .map((i) => capitalize(i18n.getWeekDay(i)))
       .map(thTmpl)
       .join('');
 
@@ -127,7 +155,7 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
   function createTableCell(day) {
     const events = state.events
       .filter((event) => {
-        return moment(event.date).isSame(day.timestamp, 'day');
+        return date(event.date).isSameDay(day.timestamp);
       })
       .sort((event1, event2) => {
         return new Date(event1.date).getTime() - new Date(event2.date).getTime();
@@ -154,10 +182,10 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
 
   function createMonthArray() {
     const days = [];
-    const curr = moment(state.currentTime);
+    const curr = date(state.currentTime);
     const month = curr.month();
-    const startDate = moment(curr).date(1).weekday(0);
-    const currentDate = moment(startDate);
+    const startDate = date(curr).date(1).weekday(i18n.getWeekStart());
+    const currentDate = date(startDate);
     const [lastMonth, nextMonth] = (function getNearbyMonths() {
       if (month === 0) {
         return [11, 1];
@@ -168,15 +196,15 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
       return [month - 1, month + 1];
     })();
 
-    function isWithinCalendarRange(date) {
-      const currentMonth = date.month();
+    function isWithinCalendarRange(date2compare) {
+      const currentMonth = date2compare.month();
 
       if (currentMonth === lastMonth || currentMonth === month) {
         return true;
       }
 
       if (currentMonth === nextMonth) {
-        return !!date.weekday();
+        return date2compare.weekday() !== i18n.getWeekStart();
       }
     }
 
@@ -186,7 +214,7 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
         timestamp: currentDate.valueOf(),
         isOtherMonth: currentDate.month() !== month
       });
-      currentDate.add(1, 'day');
+      currentDate.addDay();
     }
 
     return days;
@@ -209,7 +237,7 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
       return eventTemplate(event);
     }
 
-    const textContent = `${moment(event.date).format('HH:mm')} ${event.name}`;
+    const textContent = `${date(event.date).time()} ${event.name}`;
 
     if (event.link) {
       return (
@@ -282,10 +310,6 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
       throw Error(errors.SELECTOR_DID_NOT_MATCH);
     }
 
-    if (locale) {
-      moment.locale(locale);
-    }
-
     if (debug) {
       on(evts.WILL_RENDER, () => { console.time('render'); });
       on(evts.DID_RENDER, () => { console.timeEnd('render'); });
@@ -306,7 +330,7 @@ function eventCalendar({ selector, momentLocale: locale, debug, tdTemplate, even
    */
 
   init();
-  api = { render, setState, on, off };
+  api = { render, setState, setLocale, on, off };
   return api;
 }
 

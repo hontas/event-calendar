@@ -41,6 +41,8 @@ Remember to include styles in your build-step from `src/styles/event-calendar.st
     - **events** {Array | Undefined} [...eventItems]
 - **eventTemplate** {function(event)} Should return html string
     - **event** {eventItem} [name, date, link]
+- **i18n** {Object} Object containing dictionaries - see below
+- **locale** {String} What locale to use, defaults to 'en'
 
 ```js
 evtCalendar({
@@ -97,6 +99,25 @@ calendar({
   }
 });
 ```
+
+### i18n
+English and Swedish are available of the bat for months and days of the week.  
+Add your own like this:
+```js
+eventCalendar({
+    i18n: {
+        no: {
+            months: ['januar', 'ferbruar', ...],
+            weekdays: ['mornda', 'tirsda', ...],
+            startOfWeek: 0 // 0 = sunday, 1 = monday
+        }
+    },
+    locale: 'no'
+});
+```
+That will add 'no' translations to the i18n dictionary and `locale: 'no'` will set the locale.
+
+You may also use the method `setLocale('no')` to change locale whenever you wish. This will cause a re-render.
 
 ## Deploy
 Run `npm run major` to publish new major version  

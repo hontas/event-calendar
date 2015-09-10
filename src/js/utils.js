@@ -53,16 +53,103 @@ export function range(num) {
   return arr;
 }
 
-function is(item, type) {
-  return typeof item === type;
-}
-
 export function isFunction(fn) {
-  return is(fn, 'function');
+  return typeof fn === 'function';
 }
 
-export function isString(fn) {
-  return is(fn, 'string');
+export function isString(str) {
+  return typeof str === 'string';
 }
 
-export default { find, mapBy, capitalize, range, isFunction, isString };
+export function isUndefined(value) {
+  return typeof value === 'undefined';
+}
+
+function zeroPad(num) {
+  return num < 10 ? `0${num}` : `${num}`;
+}
+
+export function date(d) {
+  let kronos;
+
+  if (typeof d === 'object') {
+    kronos = new Date(d.getTime());
+  } else {
+    kronos = d ? new Date(d) : new Date();
+  }
+
+  function getSet(value, key) {
+    const hasValue = !isUndefined(value);
+    const method = hasValue ? 'set' + key : 'get' + key;
+
+    if (hasValue) {
+      kronos[method](value);
+      return api;
+    }
+
+    return kronos[method]();
+  }
+
+  const api = {
+    valueOf() {
+      return kronos.getTime();
+    },
+
+    getTime() {
+      return kronos.getTime();
+    },
+
+    year() {
+      return kronos.getFullYear();
+    },
+
+    month(value) {
+      return getSet(value, 'Month');
+    },
+
+    date(value) {
+      return getSet(value, 'Date');
+    },
+
+    weekday(value) {
+      if (!isUndefined(value)) {
+        const diff = value - api.weekday();
+
+        api.date(api.date() + diff);
+        return api;
+      }
+
+      return kronos.getDay();
+    },
+
+    time() {
+      const hours = zeroPad(kronos.getHours());
+      const minutes = zeroPad(kronos.getMinutes());
+      return `${hours}:${minutes}`;
+    },
+
+    subtractMonth() {
+      return api.month(kronos.getMonth() - 1);
+    },
+
+    addMonth() {
+      return api.month(kronos.getMonth() + 1);
+    },
+
+    addDay() {
+      return api.date(api.date() + 1);
+    },
+
+    isSameDay(timestamp) {
+      const compareDate = new Date(timestamp);
+
+      return ['getFullYear', 'getMonth', 'getDate'].every((fn) => {
+        return compareDate[fn]() === kronos[fn]();
+      });
+    }
+  };
+
+  return api;
+}
+
+export default { find, mapBy, capitalize, range, isFunction, isString, isUndefined, date };
