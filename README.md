@@ -1,33 +1,27 @@
 # event-calendar
 
-> Simple calendar for listing events [Demo: http://hontas.github.io/event-calendar](http://hontas.github.io/event-calendar/)
+> Simple calendar for listing events Demo: [http://hontas.github.io/event-calendar](http://hontas.github.io/event-calendar/)
 
 [![Dependency Status](https://david-dm.org/hontas/event-calendar.svg)](https://david-dm.org/hontas/event-calendar)
 [![Dependency Status](https://david-dm.org/hontas/event-calendar/dev-status.svg)](https://david-dm.org/hontas/event-calendar#info=devDependencies)
 
 ## Install
-### Node
 ```shell
 npm install --save event-calendar
-```
-
-### Bower
-```shell
+# or
 bower install --save evt-calendar
 ```
 
 ## Use
 ### ES6 module
-ES6 module
 ```js
 import eventCalender from 'event-calender';
-
 eventCalender({ selector: '.js-calender' });
 ```
 
-Remember to include styles in your build-step `src/styles/main.styl`
+Remember to include styles in your build-step from `src/styles/main.styl`
 
-### Global
+### In browser
 ```html
 <link href="bower_components/event-calendar/dist/event-calendar.css" rel="stylesheet">
 <script src="bower_components/event-calendar/dist/event-calendar.min.js"></script>
@@ -38,11 +32,15 @@ Remember to include styles in your build-step `src/styles/main.styl`
 
 ### Options
 - **selector** {String} DOM selector for container element - *required*
-- **momentLocale** {String} - remember to load locale-files before
+- **momentLocale** {String} moment locale setting
 - **state** {Object}
-    - **events** {Array} [...eventItems]
-    - **currentTime** {Date | timestamp | Datestring}
-- template functions - see below
+    - **events** {Array} Array of event items
+    - **currentTime** {Date | timestamp} Start date - defaults to *Date.now()*
+- **tdTemplate** {Function(day, events)} Should return html string    
+    - **day** {Object} [dayOfMonth, timestamp, isOtherMonth]
+    - **events** {Array | Undefined} [...eventItems]
+- **eventTemplate** {function(event)} Should return html string
+    - **event** {eventItem} [name, date, link]
 
 ```js
 evtCalendar({
@@ -53,10 +51,10 @@ evtCalendar({
     currentTime: Date.now()
   },
   tdTemplate: function({ day, events }) { return ""; },
-  eventTemplate: function(event) { return event.name"; }
+  eventTemplate: function(event) { return event.name; }
 })
   .on('did-render', function() {})
-  .on('will-change-state', function() {});
+  .on('will-change-state', function(newState) {});
 ```
 
 ### Calendar Events interface
@@ -72,7 +70,7 @@ var events = [
 
 ## API
 - **render**
-- **setState** (Object) [currentTime, events]
+- **setState** (Object) [currentTime and/or events]
 - **on** (event, callback) - subscribe to event
 - **off** (event, callback) - unsubscribe to event
 
@@ -90,13 +88,7 @@ cal.on('will-change-state', function(newState) {
 ```
 
 ### Template functions
-Supply your own template functions to get custom markup
-
-- **tdTemplate** {Function(day, events)} Returns html string    
-    - **day** {Object} [dayOfMonth, timestamp, isOtherMonth]
-    - **events** {Array} [...eventItems] or undefined
-- **eventTemplate** {function(event)} Returns html string
-    - **event** {eventItem}
+Supply your own template functions to for custom markup
 
 ```js
 calendar({
@@ -107,11 +99,12 @@ calendar({
 ```
 
 ## Deploy
-Run `npm run major` to publish new major version
-Run `npm run minor` to publish new minor version
+Run `npm run major` to publish new major version  
+Run `npm run minor` to publish new minor version  
 Run `npm run patch` to publish new version patch
 
-These tasks will:
+These tasks will
+
 1. bump version
 2. build to dist
 3. publish to npmjs
@@ -119,8 +112,9 @@ These tasks will:
 5. push new git-tags
 
 ## ToDo
-
-- remove moment JS dependancy...?
+- remove moment.js dependancy...?
+- create react component
+- create jquery plugin
 
 ## Change log
 
