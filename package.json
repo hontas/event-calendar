@@ -51,6 +51,7 @@
     "opener": "^1.4.1",
     "parallelshell": "^2.0.0",
     "rimraf": "^2.4.3",
+    "stylus": "^0.52.4",
     "tape": "^4.0.0"
   }
 }
