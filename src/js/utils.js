@@ -38,13 +38,17 @@ export function mapBy(array, keys) {
 }
 
 export function capitalize(str) {
-  if (typeof str !== 'string') {
+  if (!isString(str)) {
     throw Error('Argument must be of type String');
   }
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
 export function range(num) {
+  if (!isNumber(num)) {
+    throw Error('Argument must be of type number');
+  }
+
   let i = 0;
   const arr = [];
   do {
@@ -59,6 +63,10 @@ export function isFunction(fn) {
 
 export function isString(str) {
   return typeof str === 'string';
+}
+
+export function isNumber(num) {
+  return typeof num === 'number';
 }
 
 export function isUndefined(value) {
