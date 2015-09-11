@@ -4,6 +4,7 @@
 
 [![Dependency Status](https://david-dm.org/hontas/event-calendar.svg)](https://david-dm.org/hontas/event-calendar)
 [![Dependency Status](https://david-dm.org/hontas/event-calendar/dev-status.svg)](https://david-dm.org/hontas/event-calendar#info=devDependencies)
+[![Build Status](https://travis-ci.org/hontas/event-calendar.svg)](https://travis-ci.org/hontas/event-calendar)
 
 ## Install
 ```shell
