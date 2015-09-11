@@ -32,26 +32,26 @@ Remember to include styles in your build-step from `src/styles/event-calendar.st
 
 ### Options
 - **selector** {String} DOM selector for container element - *required*
-- **momentLocale** {String} moment locale setting
 - **state** {Object}
     - **events** {Array} Array of event items
     - **currentTime** {Date | timestamp} Start date - defaults to *Date.now()*
+- **i18n** {Object} Object containing dictionaries - see below
+- **locale** {String} What locale to use, defaults to 'en'
 - **tdTemplate** {Function(day, events)} Should return html string    
     - **day** {Object} [dayOfMonth, timestamp, isOtherMonth]
     - **events** {Array | Undefined} [...eventItems]
 - **eventTemplate** {function(event)} Should return html string
     - **event** {eventItem} [name, date, link]
-- **i18n** {Object} Object containing dictionaries - see below
-- **locale** {String} What locale to use, defaults to 'en'
 
 ```js
 evtCalendar({
   selector: '.js-evt-cal',
-  momentLocale: 'sv', // remember to load locale-file before
   state: {
     events: [{ name: 'test', date: Date.now() }],
     currentTime: Date.now()
   },
+  i18n: {}, // see example below
+  locale: 'sv',
   tdTemplate: function({ day, events }) { return ""; },
   eventTemplate: function(event) { return event.name; }
 })
@@ -133,11 +133,13 @@ These tasks will
 5. push new git-tags
 
 ## ToDo
-- remove moment.js dependancy...?
 - create react component
 - create jquery plugin
 
 ## Change log
+
+### 0.6.1
+- removed moment.js dependancy
 
 ### 0.4.5
 - Events without link
