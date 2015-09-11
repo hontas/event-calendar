@@ -1,9 +1,9 @@
 import test from 'tape';
 import { date } from '../../src/js/utils';
 
-const timestamp = 1430118000000; // 27 april 2015, 09:00
 const datestring = '2015-04-27 09:00';
-const dateObj = new Date(timestamp);
+const timestamp = Date.parse(datestring);
+const dateObj = new Date(datestring);
 const now = Date.now();
 
 function getDate() {
