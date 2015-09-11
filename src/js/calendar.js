@@ -29,7 +29,6 @@ const lang = {
 };
 
 function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'en', i18n: userLang = {}, state: initialState = {} }) {
-  const _events = {};
   let el;
   let state;
   let table;
@@ -38,7 +37,8 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
   let prev;
   let next;
   let api;
-  let i18n = assign({}, lang, userLang, {
+  const _events = {};
+  const i18n = assign({}, lang, userLang, {
     getWeekDay(i) {
       const index = i + this.getWeekStart();
       return this[locale].weekdays[index > 6 ? 0 : index];

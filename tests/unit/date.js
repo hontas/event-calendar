@@ -79,6 +79,6 @@ test('#addDay', (t) => {
 
 test('#isSameDay', (t) => {
   t.plan(2);
-  t.equal(getDate().isSameDay(timestamp), true, 'should return true if it is the same day');
-  t.equal(getDate().isSameDay(now), false, 'should return false if it is NOT the same day');
+  t.ok(getDate().isSameDay(timestamp), 'should return true if it is the same day');
+  t.notOk(getDate().isSameDay(now), 'should return false if it is NOT the same day');
 });
