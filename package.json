@@ -1,6 +1,6 @@
 {
   "name": "event-calendar",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Simple calendar for listing events",
   "repository": "https://github.com/hontas/event-calendar.git",
   "main": "src/js/calendar.js",
