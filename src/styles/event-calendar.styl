@@ -19,14 +19,24 @@ html {
   width: 100%;
 
   caption,
-  thead th {
+  &__head {
     background-color: $off-white;
     border-bottom: 1px solid $gray-lighter;
     color: $gray;
     font-weight: normal;
   }
 
+  &__head {
+    font-size: 0.7em;
+    padding: 0.4em 1.4em;
+    .rest,
+    .ending {
+      display: none;
+    }
+  }
+
   &__caption {
+    font-size: 0.875em;
     padding-top: 0.5em;
     padding-bottom: 0.3em;
   }
@@ -41,7 +51,7 @@ html {
     font-size: 1em;
     padding: 0.3em 1em .5em;
     text-align: left;
-    width: 42%;
+    width: 35%;
     &:hover, &:active {
       background-color: $gray-lighter;
       color: $gray;
@@ -55,11 +65,8 @@ html {
     text-align: right;
   }
 
-  &__next-btn { float: right; }
-
-  th {
-    font-size: 0.875em;
-    padding: 0.4em 1.4em;
+  &__next-btn {
+    float: right;
   }
 
   tbody {
@@ -78,18 +85,33 @@ html {
     font-size: 0.75em;
     padding: 0;
     position: relative;
-    height: 60px;
+    height: 40px;
     width: 150px
 
     &__event {
       color: $gray-dark;
       display: block;
       padding: 0.5em;
+      padding-left: calc(50% - 3px);
+
+      .event-text {
+        display: none;
+      }
+
+      .event-dot {
+        background-color: $gray;
+        border-radius: 50%;
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+      }
 
       &:first-child {
         padding-top: 1em;
       }
-      &:last-of-type {
+
+      &:last-child {
         padding-bottom: 1em;
       }
     }
@@ -103,7 +125,7 @@ html {
     }
 
     &__date {
-      color: inherit;
+      color: $gray-light;
       font-size: 0.833333333em;
       position: absolute;
       top: 0.3em;
@@ -111,9 +133,9 @@ html {
     }
 
     &--active {
-      background-color: white;
+      background-color: floralwhite;
       &:hover {
-        background-color: darken($off-white, 1%);
+        background-color: darken(floralwhite, 2%);
       }
     }
 
@@ -129,6 +151,55 @@ html {
 
     &:last-of-type {
       border-right: none;
+    }
+  }
+}
+
+@media (min-width: 375px) {
+  .evt-calendar {
+    &__head {
+      .rest {
+        display: initial;
+      }
+    }
+
+    &__event {
+      padding-left: 0.5em;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .evt-calendar {
+    &__prev-btn,
+    &__next-btn {
+      width: 42%;
+    }
+
+    &__head {
+      font-size: 0.875em;
+      .ending {
+        display: initial;
+      }
+    }
+
+    &__caption {
+      font-size: 1em;
+    }
+
+    &__cell {
+      height: 60px;
+
+      &__event {
+        padding-left: 0.5em;
+        .event-text {
+          display: initial;
+        }
+
+        .event-dot {
+          display: none;
+        }
+      }
     }
   }
 }

@@ -229,7 +229,10 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
   }
 
   function thTmpl(day) {
-    return `<th>${day}</th>`;
+    return (
+      `<th class="${prefix}__head">
+        ${day.substr(0, 1)}<span class="rest">${day.substr(1, 2)}<span class="ending">${day.substr(3)}</span><span>
+      </th>`);
   }
 
   function eventTmpl(event) {
@@ -238,18 +241,14 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
     }
 
     const textContent = `${date(event.date).time()} ${event.name}`;
-
-    if (event.link) {
-      return (
-        `<a class="${prefix}__cell__event" href="${event.link}">
-          ${textContent}
-        </a>`);
-    }
+    const tag = event.link ? 'a' : 'span';
+    const link = event.link ? 'href="' + event.link + '"' : '';
 
     return (
-      `<span class="${prefix}__cell__event">
-        ${textContent}
-      </span>`);
+      `<${tag} class="${prefix}__cell__event" ${link} title="${textContent}">
+        <span class="event-text">${textContent}</span>
+        <span class="event-dot"></span>
+      </${tag}>`);
   }
 
   function tdTmpl({ day, events }) {

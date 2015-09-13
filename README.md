@@ -136,8 +136,12 @@ These tasks will
 ## ToDo
 - create react component
 - create jquery plugin
+- minified version of calendar
 
 ## Change log
+
+### 0.6.4
+- Responsive layout
 
 ### 0.6.1
 - removed moment.js dependancy
