@@ -1,10 +1,14 @@
 {
   "name": "event-calendar",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Simple calendar for listing events",
   "repository": "https://github.com/hontas/event-calendar.git",
   "main": "src/js/calendar.js",
-  "keywords": ["calendar", "events", "event"],
+  "keywords": [
+    "calendar",
+    "events",
+    "event"
+  ],
   "scripts": {
     "clean": "rimraf dist/*",
     "bumb": "npm version minor",
