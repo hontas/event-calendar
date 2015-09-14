@@ -137,9 +137,11 @@ These tasks will
 ## ToDo
 - create react component
 - create jquery plugin
-- 12 hour time format
 
 ## Change log
+
+### 0.6.5
+- 12 hour time format support
 
 ### 0.6.4
 - Responsive layout
