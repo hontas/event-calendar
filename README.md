@@ -110,7 +110,8 @@ eventCalendar({
         no: {
             months: ['januar', 'ferbruar', ...],
             weekdays: ['mornda', 'tirsda', ...],
-            startOfWeek: 0 // 0 = sunday, 1 = monday
+            startOfWeek: 0, // 0 = sunday, 1 = monday
+            twelveHourFormat: true // optional
         }
     },
     locale: 'no'
@@ -136,7 +137,7 @@ These tasks will
 ## ToDo
 - create react component
 - create jquery plugin
-- minified version of calendar
+- 12 hour time format
 
 ## Change log
 

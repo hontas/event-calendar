@@ -19,7 +19,8 @@ const lang = {
   en: {
     months: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
     weekdays: 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
-    startOfWeek: 0
+    startOfWeek: 0,
+    twelveHourFormat: true
   },
   sv: {
     months: 'januari_februari_mars_april_maj_juni_juli_augusti_september_oktober_november_december'.split('_'),
@@ -48,6 +49,9 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
     },
     getWeekStart() {
       return this[locale].startOfWeek;
+    },
+    isTwelveHours() {
+      return this[locale].twelveHourFormat;
     }
   });
 
@@ -240,13 +244,14 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
       return eventTemplate(event);
     }
 
-    const textContent = `${date(event.date).time()} ${event.name}`;
+    const textContent = `${date(event.date).time(i18n.isTwelveHours())} ${event.name}`;
     const tag = event.link ? 'a' : 'span';
     const link = event.link ? 'href="' + event.link + '"' : '';
 
     return (
       `<${tag} class="${prefix}__cell__event" ${link} title="${textContent}">
-        <span class="event-text">${textContent}</span>
+        <span class="event-time">${date(event.date).time(i18n.isTwelveHours())}</span>
+        <span class="event-name">${event.name}</span>
         <span class="event-dot"></span>
       </${tag}>`);
   }

@@ -98,6 +98,7 @@ export function date(d) {
     return kronos[method]();
   }
 
+  // noinspection UnnecessaryLocalVariableJS
   const api = {
     valueOf() {
       return kronos.getTime();
@@ -130,10 +131,13 @@ export function date(d) {
       return kronos.getDay();
     },
 
-    time() {
-      const hours = zeroPad(kronos.getHours());
+    time(twelveHours) {
+      const h = kronos.getHours();
+      const postfix = twelveHours && (h > 12 ? 'pm' : 'am') || '';
+      const hours = twelveHours && (h > 12 ? h - 12 : h) || zeroPad(h);
       const minutes = zeroPad(kronos.getMinutes());
-      return `${hours}:${minutes}`;
+
+      return `${hours}:${minutes}${postfix}`;
     },
 
     subtractMonth() {

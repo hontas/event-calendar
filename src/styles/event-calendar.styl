@@ -3,6 +3,8 @@ $gray-dark = #333;
 $gray-light = #999;
 $gray-lighter = #F7F7F7;
 $off-white = #FCFCFC;
+$dot-width = 4px;
+$dot-half-width = $dot-width / 2;
 
 html {
   background-color: $gray-lighter;
@@ -92,19 +94,20 @@ html {
       color: $gray-dark;
       display: block;
       padding: 0.5em;
-      padding-left: calc(50% - 3px);
+      padding-left: "calc(50% - %s)" % $dot-half-width;
 
-      .event-text {
+      .event-time,
+      .event-name {
         display: none;
       }
 
       .event-dot {
-        background-color: $gray;
+        background-color: $gray-light;
         border-radius: 50%;
         content: '';
         display: block;
-        width: 6px;
-        height: 6px;
+        width: $dot-width;
+        height: $dot-width;
       }
 
       &:first-child {
@@ -163,8 +166,18 @@ html {
       }
     }
 
-    &__event {
-      padding-left: 0.5em;
+    &__cell {
+      &__event {
+        padding-left: 0.5em;
+
+        .event-name {
+          display: initial;
+        }
+
+        .event-dot {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -192,12 +205,9 @@ html {
 
       &__event {
         padding-left: 0.5em;
-        .event-text {
-          display: initial;
-        }
 
-        .event-dot {
-          display: none;
+        .event-time {
+          display: initial;
         }
       }
     }

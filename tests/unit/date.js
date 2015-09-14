@@ -6,8 +6,8 @@ const timestamp = Date.parse(datestring);
 const dateObj = new Date(datestring);
 const now = Date.now();
 
-function getDate() {
-  return date(timestamp);
+function getDate(time = timestamp) {
+  return date(time);
 }
 
 test('ctor', (t) => {
@@ -57,9 +57,11 @@ test('#weekday', (t) => {
 });
 
 test('#time', (t) => {
-  t.plan(2);
+  t.plan(4);
   t.equal(typeof getDate().time(), 'string', 'should be string');
   t.equal(getDate().time(), '09:00', 'should get time');
+  t.equal(getDate().time(true), '9:00am', 'should display time in 12-hour format');
+  t.equal(getDate('2015-09-14 15:20').time(true), '3:20pm', 'should display time in 12-hour format');
 });
 
 test('#subtractMonth', (t) => {
