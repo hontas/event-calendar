@@ -35,7 +35,7 @@ Remember to include styles in your build-step from `src/styles/event-calendar.st
 - **selector** {String} DOM selector for container element - *required*
 - **state** {Object}
     - **events** {Array} Array of event items
-    - **currentTime** {Date | timestamp} Start date - defaults to *Date.now()*
+    - **currentTime** {Date | timestamp | datestring } Start date - defaults to *Date.now()*
 - **i18n** {Object} Object containing dictionaries - see below
 - **locale** {String} What locale to use, defaults to 'en'
 - **tdTemplate** {Function(day, events)} Should return html string    
