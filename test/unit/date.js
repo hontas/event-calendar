@@ -23,7 +23,7 @@ describe('date', () => {
   });
 
   describe('parse date', () => {
-    it.only('should throw error on invaild date', () => {
+    it('should throw error on invaild date', () => {
       function invoke() {
         return date('sdfsdf');
       }
