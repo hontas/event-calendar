@@ -39,14 +39,14 @@ export function mapBy(array, keys) {
 
 export function capitalize(str) {
   if (!isString(str)) {
-    throw Error('Argument must be of type String');
+    throw Error(`capitalize: Argument must be of type String, got '${typeof str}'`);
   }
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
 export function range(num) {
-  if (!isNumber(num)) {
-    throw Error('Argument must be of type number');
+  if (!isNumber(num) || isNaN(num)) {
+    throw Error(`range: Argument must be of type number, got '${typeof num}'`);
   }
 
   let i = 0;
@@ -69,12 +69,24 @@ export function isNumber(num) {
   return typeof num === 'number';
 }
 
+export function isNaN(value) {
+  // noinspection Eslint
+  return isNumber(value) && (value !== value);
+}
+
 export function isUndefined(value) {
   return typeof value === 'undefined';
 }
 
 function zeroPad(num) {
   return num < 10 ? `0${num}` : `${num}`;
+}
+
+function valiDate(d) {
+  if (Object.prototype.toString.call(d) !== '[object Date]') {
+    return false;
+  }
+  return !isNaN(d.getTime());
 }
 
 export function date(d) {
@@ -84,6 +96,10 @@ export function date(d) {
     kronos = new Date(d.getTime());
   } else {
     kronos = d ? new Date(d) : new Date();
+  }
+
+  if (!valiDate(kronos)) {
+    throw Error(`Could not create date from '${d}'`);
   }
 
   function getSet(value, key) {
@@ -108,8 +124,8 @@ export function date(d) {
       return kronos.getTime();
     },
 
-    year() {
-      return kronos.getFullYear();
+    year(value) {
+      return getSet(value, 'FullYear');
     },
 
     month(value) {
@@ -164,4 +180,15 @@ export function date(d) {
   return api;
 }
 
-export default { find, mapBy, capitalize, range, isFunction, isString, isUndefined, date };
+export default {
+  find,
+  mapBy,
+  capitalize,
+  range,
+  isFunction,
+  isString,
+  isNumber,
+  isNaN,
+  isUndefined,
+  date
+};
