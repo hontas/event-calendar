@@ -24,7 +24,12 @@ html
 
     script(src='event-calendar.min.js')
     script.
-        var cal = eventCalendar({ selector: '.js-cal' });
+        var cal = eventCalendar({
+          selector: '.js-cal',
+          state: {
+            currentTime: '2015-04-27T09:00'
+          }
+        });
         var btn = document.querySelector('.js-events');
 
         btn.addEventListener('click', function() {
