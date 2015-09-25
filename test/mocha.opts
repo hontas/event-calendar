@@ -1,0 +1,6 @@
+--growl
+--recursive
+--compilers js:babel/register
+--colors
+--reporter dots
+
