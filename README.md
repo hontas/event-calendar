@@ -142,7 +142,7 @@ These tasks will
 
 ## Change log
 
-### 0.6.6
+### 0.7.0
 - expose method destroy, to remove itself from the DOM
 - expose method month, to get and set normalized month (non-zero-based)
 - added integration tests
