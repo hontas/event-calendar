@@ -76,6 +76,8 @@ var events = [
 - **setState** (Object) [currentTime and/or events]
 - **on** (event, callback) - subscribe to event
 - **off** (event, callback) - unsubscribe to event
+- **month** (optional value) - get / set month (non-zero-based)
+- **destroy** - removes itself from DOM
 
 ### Events
 - **initialized**
@@ -139,6 +141,11 @@ These tasks will
 - create jquery plugin
 
 ## Change log
+
+### 0.6.6
+- expose method destroy, to remove itself from the DOM
+- expose method month, to get and set normalized month (non-zero-based)
+- added integration tests
 
 ### 0.6.5
 - 12 hour time format support
