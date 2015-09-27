@@ -5,7 +5,12 @@
   margin-top: 1em;
   padding: 0.7em 2em;
 }
-</style></head><body><h1>Event Calendar</h1><div class="js-cal"></div><button class="js-events">Generate events</button></body><script src="event-calendar.min.js"></script><script>var cal = eventCalendar({ selector: '.js-cal' });
+</style></head><body><h1>Event Calendar</h1><div class="js-cal"></div><button class="js-events">Generate events</button></body><script src="event-calendar.min.js"></script><script>var cal = eventCalendar({
+  selector: '.js-cal',
+  state: {
+    currentTime: '2015-04-27T09:00'
+  }
+});
 var btn = document.querySelector('.js-events');
 
 btn.addEventListener('click', function() {

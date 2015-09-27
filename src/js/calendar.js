@@ -29,7 +29,7 @@ const lang = {
   }
 };
 
-function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'en', i18n: userLang = {}, state: initialState = {} }) {
+function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale: initLocale, i18n: userLang = {}, state: initialState = {} }) {
   let el;
   let state;
   let table;
@@ -38,6 +38,7 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
   let prev;
   let next;
   let api;
+  let locale = initLocale || 'en';
   const _events = {};
   const i18n = assign({}, lang, userLang, {
     getWeekDay(i) {
@@ -96,6 +97,20 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
     next.addEventListener('click', goToNextMonth);
   }
 
+  function month(value) {
+    if (value) {
+      const newMonth = date(state.currentTime).month(value - 1);
+      setState({
+        currentTime: newMonth.valueOf()
+      });
+
+      emit(evts.DID_CHANGE_MONTH, newMonth.month() + 1);
+      return api;
+    }
+
+    return date(state.currentTime).month() + 1;
+  }
+
   function goToPreviousMonth() {
     const previous = date(state.currentTime).subtractMonth();
     setState({
@@ -122,7 +137,12 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
   }
 
   function setLocale(str) {
+    if (!isString(str) || str.length === 0) {
+      throw Error('setLocale: Argument must be valid language string, eg en or sv');
+    }
+
     locale = str;
+    el.getElementsByTagName('thead')[0].innerHTML = createTableHead();
     render();
   }
 
@@ -187,23 +207,23 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
   function createMonthArray() {
     const days = [];
     const curr = date(state.currentTime);
-    const month = curr.month();
+    const startMonth = curr.month();
     const startDate = date(curr).date(1).weekday(i18n.getWeekStart());
     const currentDate = date(startDate);
     const [lastMonth, nextMonth] = (function getNearbyMonths() {
-      if (month === 0) {
+      if (startMonth === 0) {
         return [11, 1];
       }
-      if (month === 11) {
+      if (startMonth === 11) {
         return [10, 0];
       }
-      return [month - 1, month + 1];
+      return [startMonth - 1, startMonth + 1];
     })();
 
     function isWithinCalendarRange(date2compare) {
       const currentMonth = date2compare.month();
 
-      if (currentMonth === lastMonth || currentMonth === month) {
+      if (currentMonth === lastMonth || currentMonth === startMonth) {
         return true;
       }
 
@@ -216,12 +236,42 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
       days.push({
         dayOfMonth: currentDate.date(),
         timestamp: currentDate.valueOf(),
-        isOtherMonth: currentDate.month() !== month
+        isOtherMonth: currentDate.month() !== startMonth
       });
       currentDate.addDay();
     }
 
     return days;
+  }
+
+  function destroy(callback) {
+    if (el) {
+      // remove DOM
+      let firstChild = el.firstChild;
+      while (firstChild) {
+        el.removeChild(firstChild);
+        firstChild = el.firstChild;
+      }
+
+      // remove events
+      Object.keys(_events).forEach((event) => {
+        _events[event] = null;
+      });
+
+      // reset variables
+      el = null;
+      state = null;
+      table = null;
+      captionText = null;
+      tbody = null;
+      prev = null;
+      next = null;
+      api = null;
+    }
+
+    if (isFunction(callback)) {
+      callback();
+    }
   }
 
   /**
@@ -290,6 +340,10 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
       return cb !== callback;
     });
 
+    if (_events[event].length === 0) {
+      delete _events[event];
+    }
+
     return api;
   }
 
@@ -315,8 +369,8 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
     }
 
     if (debug) {
-      on(evts.WILL_RENDER, () => { console.time('render'); });
-      on(evts.DID_RENDER, () => { console.timeEnd('render'); });
+      on(evts.WILL_RENDER, () => { console.time('render'); }); // eslint-disable-line no-console
+      on(evts.DID_RENDER, () => { console.timeEnd('render'); }); // eslint-disable-line no-console
     }
 
     state = assign({}, {
@@ -334,7 +388,17 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale = 'e
    */
 
   init();
-  api = { render, setState, setLocale, on, off };
+  api = {
+    render,
+    setState,
+    setLocale,
+    month,
+    on,
+    off,
+    destroy,
+    _events
+  };
+
   return api;
 }
 

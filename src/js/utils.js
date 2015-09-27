@@ -70,8 +70,7 @@ export function isNumber(num) {
 }
 
 export function isNaN(value) {
-  // noinspection Eslint
-  return isNumber(value) && (value !== value);
+  return isNumber(value) && (value !== value);  // eslint-disable-line no-self-compare
 }
 
 export function isUndefined(value) {
