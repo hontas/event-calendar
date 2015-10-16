@@ -1,4 +1,5 @@
 import assign from 'object-assign';
+import pkg from '../../package.json';
 import { capitalize, range, isFunction, isString, date } from './utils';
 
 const evts = {
@@ -401,6 +402,8 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale: ini
 
   return api;
 }
+
+eventCalendar.version = pkg.version;
 
 export default eventCalendar;
 

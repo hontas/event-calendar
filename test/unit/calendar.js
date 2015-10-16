@@ -11,8 +11,12 @@ describe('eventCalendar', () => {
   });
 
   describe('ctor', () => {
-    it('ctor', () => {
+    it('should throw when invoked without arguments', () => {
       expect(eventCalendar).to.throw();
+    });
+
+    it('should expose property version', () => {
+      expect(eventCalendar).to.have.property('version').that.match(/\d\.\d+\.\d+/);
     });
   });
 });

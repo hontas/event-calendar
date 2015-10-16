@@ -79,6 +79,9 @@ var events = [
 - **month** (optional value) - get / set month (non-zero-based)
 - **destroy** - removes itself from DOM
 
+### static
+- **version** (String) - current version
+
 ### Events
 - **initialized**
 - **will-render**
