@@ -145,6 +145,9 @@ These tasks will
 
 ## Change log
 
+### 0.7.1
+- render previous and next month name
+
 ### 0.7.0
 - expose method destroy, to remove itself from the DOM
 - expose method month, to get and set normalized month (non-zero-based)

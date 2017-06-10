@@ -44,6 +44,14 @@ describe('calendar', () => {
       expect(getEls('caption').first.textContent).to.match(/april/i);
     });
 
+    it('should print out current previous month', () => {
+      expect(getEls('.evt-calendar__prev-btn').first.textContent).to.match(/march/i);
+    });
+
+    it('should print out current next month', () => {
+      expect(getEls('.evt-calendar__next-btn').first.textContent).to.match(/may/i);
+    });
+
     it('should create a row with all weekdays', () => {
       var head = getEls('thead th');
       expect(head).to.have.length(7);
@@ -69,20 +77,20 @@ describe('calendar', () => {
 
     it('should re-render the view', () => {
       cal.setLocale('sv');
-      var head = getEls('thead th');
+      const head = getEls('thead th');
       expect(head.map(getTextContent)).to.eql(['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Söndag']);
     });
   });
 
   describe('change month', () => {
     it('should change to next month', () => {
-      var nextBtn = getEls('.evt-calendar__next-btn').first;
+      const nextBtn = getEls('.evt-calendar__next-btn').first;
       nextBtn.click();
 
-      var rows = getEls('tbody tr');
-      var dates = getEls('tbody td');
-      var caption = getEls('caption').first.textContent;
-      var WEEKS = 6;
+      const rows = getEls('tbody tr');
+      const dates = getEls('tbody td');
+      const caption = getEls('caption').first.textContent;
+      const WEEKS = 6;
 
       expect(caption).to.match(/may/i);
       expect(rows).to.have.length(WEEKS);
@@ -105,20 +113,26 @@ describe('calendar', () => {
       cal.on('will-render', spy);
       cal.month(8);
 
-      var caption = getEls('caption').first.textContent;
+      const caption = getEls('caption').first.textContent;
       expect(caption).to.match(/august/i);
       expect(spy).to.have.been.called;
+    });
+
+    it('should handle displaying previous month over year', () => {
+      cal.month(1);
+      expect(getEls('.evt-calendar__prev-btn').first.textContent).to.match(/december/i);
     });
 
     it('should handle spanning over new years', () => {
       cal.month(12);
 
-      var rows = getEls('tbody tr');
-      var dates = getEls('tbody td');
-      var WEEKS = 5;
+      const rows = getEls('tbody tr');
+      const dates = getEls('tbody td');
+      const WEEKS = 5;
 
       expect(rows).to.have.length(WEEKS);
       expect(dates).to.have.length(WEEKS * 7);
+      expect(getEls('.evt-calendar__next-btn').first.textContent).to.match(/january/i);
     });
   });
 

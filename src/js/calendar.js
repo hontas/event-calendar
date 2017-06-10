@@ -151,8 +151,17 @@ function eventCalendar({ selector, debug, tdTemplate, eventTemplate, locale: ini
     emit(evts.WILL_RENDER);
 
     const newTbody = createEl('tbody', { innerHTML: createMonth() });
+    const currMonth = date(state.currentTime).month();
+    const lastMonth = currMonth === 0 ? 11 : currMonth - 1;
 
-    captionText.textContent = capitalize(i18n.getMonth(date(state.currentTime).month()));
+
+    try {
+      prev.textContent = '< ' + capitalize(i18n.getMonth(lastMonth));
+      captionText.textContent = capitalize(i18n.getMonth(currMonth));
+      next.textContent = capitalize(i18n.getMonth((currMonth + 1) % 12)) + ' >';
+    } catch (e) {
+      throw (new Error(lastMonth + e));
+    }
 
     table.replaceChild(newTbody, tbody);
     tbody = newTbody;
