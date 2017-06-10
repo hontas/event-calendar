@@ -145,7 +145,7 @@ These tasks will
 
 ## Change log
 
-### 0.7.1
+### 0.8.1
 - render previous and next month name
 
 ### 0.7.0
